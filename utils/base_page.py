@@ -11,13 +11,13 @@ class BasePage:
         value = self.elements[key][1]
         return safe_find_element(self.driver, self.elements[key][0], value, wait_for_visibility)
 
-    def click(self, key):
-        element = self.find_element(key)
+    def click(self, element):
         if element:
-            safe_click(element)
+            return safe_click(element)
+        else:
+            return None
 
-    def read_text(self, key):
-        element = self.find_element(key)
+    def read_text(self, element):
         if element:
             return safe_read(element)
         return None
