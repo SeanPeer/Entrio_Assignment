@@ -22,49 +22,52 @@ def setup():
     driver.quit()
 
 
+# Tesing contact button - validate by reading artivle
 def test_contact_resource(setup):
     page = ResourceCenterPage(setup)
     expected_text = 'How Entrio Can Enrich Your IT Catalog'
 
     accept_cookie = page.find_element('accept_cookie')
-    safe_click(accept_cookie)
+    page.click(accept_cookie)
 
     ebook_element = page.find_element('how_entrio_can_enrich')
-    safe_click(ebook_element)
+    page.click(ebook_element)
 
     title_element = page.find_element('contact_info_page')
-    actual_text = safe_read(title_element)
+    actual_text = page.read_text(title_element)
 
     assert actual_text == expected_text
 
 
+# Testing resistance from refresh
 def test_refresh(setup):
     page = ResourceCenterPage(setup)
     expected_text = 'How Entrio Can Enrich Your IT Catalog'
 
     accept_cookie = page.find_element('accept_cookie')
-    safe_click(accept_cookie)
+    page.click(accept_cookie)
 
     ebook_element = page.find_element('how_entrio_can_enrich')
-    safe_click(ebook_element)
+    page.click(ebook_element)
 
     setup.refresh()
 
     title_element = page.find_element('contact_info_page')
-    actual_text = safe_read(title_element)
+    actual_text = page.read_text(title_element)
 
     assert actual_text == expected_text
 
 
+# Testing the accessibility of the 2 videos
 def test_video1_visibility(setup):
     page = ResourceCenterPage(setup)
     flag = False
 
     accept_cookie = page.find_element('accept_cookie')
-    safe_click(accept_cookie)
+    page.click(accept_cookie)
 
     video_link_element = page.find_element('video1_link')
-    safe_click(video_link_element)
+    page.click(video_link_element)
 
     video_element = page.find_element('video1_frame')
     if video_element:
@@ -78,10 +81,10 @@ def test_video2_visibility(setup):
     flag = False
 
     accept_cookie = page.find_element('accept_cookie')
-    safe_click(accept_cookie)
+    page.click(accept_cookie)
 
     video_link_element = page.find_element('video2_link')
-    safe_click(video_link_element)
+    page.click(video_link_element)
 
     video_element = page.find_element('video2_frame')
     if video_element:
@@ -96,13 +99,13 @@ def test_blog_accessibility(setup):
     expected_text = 'It’s been “tech up or tap out.”'
 
     accept_cookie = page.find_element('accept_cookie')
-    safe_click(accept_cookie)
+    page.click(accept_cookie)
 
     blog_link_element = page.find_element('blog_link')
-    safe_click(blog_link_element)
+    page.click(blog_link_element)
 
     blog_text_element = page.find_element('blog_sample')
-    actual_text = safe_read(blog_text_element)
+    actual_text = page.read_text(blog_text_element)
 
     assert expected_text == actual_text
 
@@ -116,22 +119,22 @@ def test_resource_blog(setup):
     flag = False
 
     accept_cookie = page.find_element('accept_cookie')
-    safe_click(accept_cookie)
+    page.click(accept_cookie)
 
     first_blog_element = page.find_element('first_blog')
-    safe_click(first_blog_element)
+    page.click(first_blog_element)
     time.sleep(3)
     actual_url1 = setup.current_url
     setup.back()
 
     second_blog_element = page.find_element('second_blog')
-    safe_click(second_blog_element)
+    page.click(second_blog_element)
     time.sleep(3)
     actual_url2 = setup.current_url
     setup.back()
 
     third_blog_element = page.find_element('third_blog')
-    safe_click(third_blog_element)
+    page.click(third_blog_element)
     time.sleep(3)
     actual_url3 = setup.current_url
 
