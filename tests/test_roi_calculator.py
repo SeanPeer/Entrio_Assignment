@@ -2,6 +2,7 @@ import time
 
 import pytest
 from selenium import webdriver
+from selenium.webdriver import Keys
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
@@ -23,6 +24,7 @@ def setup():
     return driver
 
 
+# Verify contact button behavior
 def test_start_saving(setup):
     page = ROICalculatorPage(setup)
     expected_url = 'https://www.entrio.io/contact'
@@ -39,6 +41,7 @@ def test_start_saving(setup):
     assert expected_url == actual_url
 
 
+#   Testing the default value of estimated saving $ annual cost avoidance
 def test_default_dollars(setup):
     page = ROICalculatorPage(setup)
     expected_savings = '$27,500,000'
@@ -58,6 +61,7 @@ def test_default_dollars(setup):
     assert actual_savings == expected_savings and actual_annual == expected_annual
 
 
+# Testing buttons affect
 def test_regional_button(setup):
     page = ROICalculatorPage(setup)
     expected_savings = '$26,750,000'
@@ -114,6 +118,59 @@ def test_global_button(setup):
 
     global_button_element = page.find_element('global')
     page.click(global_button_element)
+
+    savings_element = page.find_element('estimated_savings')
+    annual_element = page.find_element('annual_cost_avoidance')
+
+    actual_savings = page.read_text(savings_element)
+    actual_annual = page.read_text(annual_element)
+
+    assert actual_savings == expected_savings and actual_annual == expected_annual
+
+# changing number of employees and its effect on value
+def test_number_of_employees(setup):
+    page = ROICalculatorPage(setup)
+    expected_savings = '$28,750,000'
+    expected_annual = '$23,862,500'
+    accept_cookie = page.find_element('accept_cookie')
+    page.click(accept_cookie)
+    time.sleep(3)
+
+    page.switch_to_correct_frame('roi_frame')
+
+    number_element = page.find_element('number_of_employees')
+    page.send_keys(number_element, Keys.CONTROL + 'a')
+    for i in range(5):
+        page.send_keys(number_element, Keys.BACKSPACE)
+    page.send_keys(number_element, "100000")
+    page.send_keys(number_element, Keys.ENTER)
+
+    savings_element = page.find_element('estimated_savings')
+    annual_element = page.find_element('annual_cost_avoidance')
+
+    actual_savings = page.read_text(savings_element)
+    actual_annual = page.read_text(annual_element)
+
+    assert actual_savings == expected_savings and actual_annual == expected_annual
+
+
+# testing the max value and its effect
+def test_max_number_of_employees(setup):
+    page = ROICalculatorPage(setup)
+    expected_savings = '$35,000,000'
+    expected_annual = '$29,050,000'
+    accept_cookie = page.find_element('accept_cookie')
+    page.click(accept_cookie)
+    time.sleep(3)
+
+    page.switch_to_correct_frame('roi_frame')
+
+    number_element = page.find_element('number_of_employees')
+    page.send_keys(number_element, Keys.CONTROL + 'a')
+    for i in range(5):
+        page.send_keys(number_element, Keys.BACKSPACE)
+    page.send_keys(number_element, "500000")
+    page.send_keys(number_element, Keys.ENTER)
 
     savings_element = page.find_element('estimated_savings')
     annual_element = page.find_element('annual_cost_avoidance')
@@ -258,5 +315,3 @@ def test_contact_invalid_email(setup):
     error_message_text = page.read_text(error_message_element)
 
     assert error_message_text == expected_value
-
-# do the dame on ROI
