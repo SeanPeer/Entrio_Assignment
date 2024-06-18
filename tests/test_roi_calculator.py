@@ -61,11 +61,11 @@ def test_default_dollars(setup):
     assert actual_savings == expected_savings and actual_annual == expected_annual
 
 
-# Testing buttons affect
+# Testing buttons effect
 def test_regional_button(setup):
     page = ROICalculatorPage(setup)
     expected_savings = '$26,750,000'
-    expected_annual = '$$22,202,500'
+    expected_annual = '$22,202,500'
     accept_cookie = page.find_element('accept_cookie')
     page.click(accept_cookie)
     time.sleep(3)
@@ -127,7 +127,7 @@ def test_global_button(setup):
 
     assert actual_savings == expected_savings and actual_annual == expected_annual
 
-# changing number of employees and its effect on value
+# changing number of employees and test its effect on value
 def test_number_of_employees(setup):
     page = ROICalculatorPage(setup)
     expected_savings = '$28,750,000'
@@ -215,6 +215,7 @@ def test_contact_no_first_name(setup):
     assert error_message_text == expected_value
 
 
+# Testing the error handling - and validate it
 def test_contact_no_last_name(setup):
     page = ROICalculatorPage(setup)
 

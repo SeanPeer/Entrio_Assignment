@@ -90,6 +90,7 @@ def test_video2_visibility(setup):
     assert flag
 
 
+# Testing accessibility of the articles - validating by reading part of the article
 def test_blog_accessibility(setup):
     page = ResourceCenterPage(setup)
     expected_text = 'It’s been “tech up or tap out.”'
@@ -106,6 +107,7 @@ def test_blog_accessibility(setup):
     assert expected_text == actual_text
 
 
+# Testing 3 blogsa accessibility - validating by URL
 def test_resource_blog(setup):
     page = ResourceCenterPage(setup)
     expected_url1 = 'https://www.entrio.io/blog/8-common-data-issues-preventing-tech-visibility'
@@ -139,6 +141,7 @@ def test_resource_blog(setup):
     assert flag
 
 
+# testing the functionality of the button
 def test_view_all(setup):
     page = ResourceCenterPage(setup)
     expected_url = "https://www.entrio.io/blog"
@@ -148,4 +151,3 @@ def test_view_all(setup):
     actual_url = setup.current_url
 
     assert actual_url == expected_url
-

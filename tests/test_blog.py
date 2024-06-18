@@ -22,7 +22,7 @@ def setup():
     return driver
 
 
-# Clicking each article and checking if are reachable
+# Clicking each article and checking if are reachable - validating its name
 def test_blog_titles(setup):
     page = BlogPage(setup)
     expected_names = ['8 Common Data Issues Preventing Tech Visibility',
